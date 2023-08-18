@@ -2,8 +2,51 @@ syntax="proto3";
 
 package auth;
 
+service UserService {
+    rpc Createuser(CreateUserDto) returns (User) {}
+    rpc FindAll (Empty) returns (User)
+    rpc FindOneUser (findOneUserDto) returns (User) {}
+    rpc UpdateUser (UpdateUserDto) returns (User) {}
+    rpc RemoveUser (FindOneUserDto) returns (User) {}
+    rpc QueryUsers (stream paginationDto) returns (stream User)
+}
+
+message paginationDto {
+    int32 page = 1;
+    int32 skip = 2;
+}
+
+message UpdateUserDto {
+    string id = 1;
+    SocialMedia socialMedia = 2;
+}
+
+message findOneUserDto {
+    string id = 1;
+}
+
+message Empty {};
+
+message Users{
+    repeated User users = 1;
+}
+
+message CreateuserDto {
+    string username = 1;
+    string password = 2;
+    int32 age = 3;
+}
+
 message User {
     string id = 1;
     string username = 2;
     string password =3;
+    int32 age = 4;
+    bool subscribed = 5;
+    SocialMedia socialMedia = 6;
+}
+
+message SocialMedia {
+    optional string twitterUrl =1;
+    optional string fbUrl = 2; 
 }
